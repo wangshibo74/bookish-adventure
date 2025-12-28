@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>CS职业战队人气投票 | 为你喜欢的战队打call</title>
+    <meta name="keywords" content="CS2,CSGO,战队投票,NAVI,G2,FaZe">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{background:#121826;min-height:100vh;font-family:Inter,system-ui,sans-serif;color:#e5e7eb;}
+        a{text-decoration:none;color:inherit;}
+        ul,li{list-style:none;}
+        .container{max-width:1200px;margin:0 auto;padding:0 1rem;}
+        /* 自定义核心样式 - 无任何外部依赖 秒加载 */
+        .cs-card{background:#1e293b;border-radius:1rem;border:1px solid #374151;padding:1.5rem;transition:all .3s ease;}
+        .cs-card:hover{box-shadow:0 0 20px rgba(59, 130, 246, 0.3);transform:translateY(-2px);}
+        .vote-btn{width:100%;padding:.6rem 0;border-radius:.7rem;font-weight:500;border:none;color:#fff;background:#3b82f6;cursor:pointer;transition:all .2s ease;}
+        .vote-btn:hover{background:rgba(59,130,246,.8);}
+        .vote-btn:active{background:rgba(59,130,246,.6);}
+        .voted-btn{background:#ec4899;cursor:not-allowed;}
+        .number-animate{font-size:1.8rem;font-weight:bold;transition:all .5s ease-in-out;}
+        .team-icon{width:7rem;height:7rem;border-radius:50%;background:#1f2937;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:bold;margin-bottom:1rem;}
+        .header-bg{background:linear-gradient(to bottom,#1e293b 0%,#121826 100%);padding:2rem 1rem;text-align:center;}
+        .grid-box{display:grid;grid-template-columns:1fr;gap:1.5rem;padding:2rem 0;}
+        @media (min-width:640px) {.grid-box{grid-template-columns:repeat(2,1fr);}}
+        @media (min-width:1024px) {.grid-box{grid-template-columns:repeat(3,1fr);}}
+    </style>
+</head>
+<body>
+    <!-- 页面头部标题区 -->
+    <header class="header-bg">
+        <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:bold;margin-bottom:.5rem;color:#fff;">
+            ⭐ CS职业战队人气投票
+        </h1>
+        <p style="color:#9ca3af;font-size:1.1rem;max-width:700px;margin:0 auto;">
+            为你心目中最强的CSGO/CS2战队投上宝贵一票，选出人气王者！【每个战队限投1票】
+        </p>
+    </header>
+
+    <!-- 投票主体区域 -->
+    <main class="container">
+        <div class="grid-box">
+            <!-- 战队卡片1 - Navi -->
+            <div class="cs-card flex flex-col items-center justify-between">
+                <div class="team-icon" style="color:#3b82f6">NAVI</div>
+                <h2 style="font-size:1.25rem;font-weight:bold;margin-bottom:.5rem;">Natus Vincere</h2>
+                <p style="color:#9ca3af;text-align:center;margin-bottom:1.5rem;">独联体王者 · 传奇之师</p>
+                <div style="display:flex;align-items:center;justify-content:center;gap:1rem;width:100%;margin-bottom:1rem;">
+                    <span class="number-animate" id="navi-votes">156</span>
+                    <span style="color:#9ca3af;">票数</span>
+                </div>
+                <button onclick="vote('navi')" id="navi-btn" class="vote-btn">👍 立即投票</button>
+            </div>
+
+            <!-- 战队卡片2 - G2 -->
+            <div class="cs-card flex flex-col items-center justify-between">
+                <div class="team-icon" style="color:#ec4899">G2</div>
+                <h2 style="font-size:1.25rem;font-weight:bold;margin-bottom:.5rem;">G2 Esports</h2>
+                <p style="color:#9ca3af;text-align:center;margin-bottom:1.5rem;">欧洲豪门 · 星光璀璨</p>
+                <div style="display:flex;align-items:center;justify-content:center;gap:1rem;width:100%;margin-bottom:1rem;">
+                    <span class="number-animate" id="g2-votes">142</span>
+                    <span style="color:#9ca3af;">票数</span>
+                </div>
+                <button onclick="vote('g2')" id="g2-btn" class="vote-btn">👍 立即投票</button>
+            </div>
+
+            <!-- 战队卡片3 - FaZe -->
+            <div class="cs-card flex flex-col items-center justify-between">
+                <div class="team-icon" style="color:#eab308">FAZE</div>
+                <h2 style="font-size:1.25rem;font-weight:bold;margin-bottom:.5rem;">FaZe Clan</h2>
+                <p style="color:#9ca3af;text-align:center;margin-bottom:1.5rem;">银河战舰 · 世界之巅</p>
+                <div style="display:flex;align-items:center;justify-content:center;gap:1rem;width:100%;margin-bottom:1rem;">
+                    <span class="number-animate" id="faze-votes">178</span>
+                    <span style="color:#9ca3af;">票数</span>
+                </div>
+                <button onclick="vote('faze')" id="faze-btn" class="vote-btn">👍 立即投票</button>
+            </div>
+
+            <!-- 战队卡片4 - Liquid -->
+            <div class="cs-card flex flex-col items-center justify-between">
+                <div class="team-icon" style="color:#60a5fa">LIQ</div>
+                <h2 style="font-size:1.25rem;font-weight:bold;margin-bottom:.5rem;">Team Liquid</h2>
+                <p style="color:#9ca3af;text-align:center;margin-bottom:1.5rem;">北美荣光 · 战术大师</p>
+                <div style="display:flex;align-items:center;justify-content:center;gap:1rem;width:100%;margin-bottom:1rem;">
+                    <span class="number-animate" id="liquid-votes">129</span>
+                    <span style="color:#9ca3af;">票数</span>
+                </div>
+                <button onclick="vote('liquid')" id="liquid-btn" class="vote-btn">👍 立即投票</button>
+            </div>
+
+            <!-- 战队卡片5 - Vitality -->
+            <div class="cs-card flex flex-col items-center justify-between">
+                <div class="team-icon" style="color:#4ade80">VIT</div>
+                <h2 style="font-size:1.25rem;font-weight:bold;margin-bottom:.5rem;">Team Vitality</h2>
+                <p style="color:#9ca3af;text-align:center;margin-bottom:1.5rem;">法国雄鸡 · 火力全开</p>
+                <div style="display:flex;align-items:center;justify-content:center;gap:1rem;width:100%;margin-bottom:1rem;">
+                    <span class="number-animate" id="vitality-votes">115</span>
+                    <span style="color:#9ca3af;">票数</span>
+                </div>
+                <button onclick="vote('vitality')" id="vitality-btn" class="vote-btn">👍 立即投票</button>
+            </div>
+
+            <!-- 战队卡片6 - NIP -->
+            <div class="cs-card flex flex-col items-center justify-between">
+                <div class="team-icon" style="color:#fff">NIP</div>
+                <h2 style="font-size:1.25rem;font-weight:bold;margin-bottom:.5rem;">Ninjas in Pyjamas</h2>
+                <p style="color:#9ca3af;text-align:center;margin-bottom:1.5rem;">瑞典传奇 · 不朽神话</p>
+                <div style="display:flex;align-items:center;justify-content:center;gap:1rem;width:100%;margin-bottom:1rem;">
+                    <span class="number-animate" id="nip-votes">108</span>
+                    <span style="color:#9ca3af;">票数</span>
+                </div>
+                <button onclick="vote('nip')" id="nip-btn" class="vote-btn">👍 立即投票</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页面底部 -->
+    <footer style="margin-top:3rem;padding:1.5rem 1rem;background:#1e293b;text-align:center;color:#6b7280;border-top:1px solid #374151;">
+        <p>© 2025 CS战队人气投票 | 为热爱的电竞战队打call</p>
+    </footer>
+
+    <!-- 核心投票逻辑JS【纯净版-无历史记录】 -->
+    <script>
+        // ✅ 彻底清除本地所有投票记录 (打开页面自动清空)
+        localStorage.removeItem('votedTeams');
+        localStorage.removeItem('voteData');
+        
+        const votedTeams = new Set();
+        const voteData = { navi: 156, g2: 142, faze: 178, liquid: 129, vitality: 115, nip: 108 };
+
+        function vote(teamId) {
+            if (votedTeams.has(teamId)) {
+                alert('你已经为该战队投过票啦！每个战队只能投1票哦~');
+                return;
+            }
+            const voteEl = document.getElementById(`${teamId}-votes`);
+            const btnEl = document.getElementById(`${teamId}-btn`);
+            voteData[teamId]++;
+            voteEl.textContent = voteData[teamId];
+            votedTeams.add(teamId);
+            btnEl.classList.replace('vote-btn', 'voted-btn');
+            btnEl.innerHTML = '✅ 投票成功';
+            localStorage.setItem('votedTeams', JSON.stringify([...votedTeams]));
+            localStorage.setItem('voteData', JSON.stringify(voteData));
+            alert('投票成功！感谢你为该战队打call 🎉');
+        }
+    </script>
+</body>
+</html>
